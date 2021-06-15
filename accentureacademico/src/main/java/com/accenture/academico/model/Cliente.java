@@ -24,8 +24,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity(name = "Cliente")
 public class Cliente implements Serializable {
-	
-	
+
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -101,14 +100,6 @@ public class Cliente implements Serializable {
 		this.clienteFone = clienteFone;
 	}
 	
-	public void criarConta(int idCliente, String senha) {
-		
-	}
-	
-	public void encerrarConta() {
-		
-	}
-	
 	
 	@Override
 	public int hashCode() {
@@ -135,8 +126,17 @@ public class Cliente implements Serializable {
 		return true;
 	}
 	
+	public Cliente() {
+		
+	}
 	
+	public Cliente(String clienteNome, String clienteCPF, int clienteFone, String senha, Agencia agencia) {
+		super();
+		this.clienteNome = clienteNome;
+		this.clienteCPF = clienteCPF;
+		this.clienteFone = clienteFone;
+		this.senha = senha;
+		this.agencia = agencia;
+	}
 	
-	
-
 }

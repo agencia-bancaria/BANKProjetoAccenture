@@ -36,36 +36,36 @@ public class AgenciaController {
 		return this.agenciaService.buscarAgencias(pageable);
 	}
 	
-//	
-//	//MÉTODO PARA SALVAR AGENCIA
-//	@PostMapping("/")
-//	@ResponseStatus(HttpStatus.CREATED)
-//	public void salvarAgencia(@RequestBody Agencia agencia) {
-//		this.agenciaService.salvarAgencia(agencia);
-//	}
-//		
-//	
-//	//MÉTODO PARA ALTERAR AGENCIA
-//	@PutMapping("/{id}")
-//	public void alterarAgencia(@PathVariable("id") Long id, @RequestBody Agencia agencia) {
-//		this.agenciaService.atualizarAgencia(agencia, id);
-//	}
-//	
-//	//MÉTODO PARA DELETAR AGENCIA
-//	@DeleteMapping(value = "/{id}", produces = "application/text")
-//	public String excluirAgencia(@PathVariable("id") Long id) {
-//		
-//		this.agenciaService.excluirAgencia(id);
-//		
-//		return "Agencia de ID " + id + " foi deletada com sucesso!";
-//				
-//	}
-//	
-//	//MÉTODO PARA BUSCAR AGENCIA POR ID
-//	@GetMapping("/{id}")
-//	public Agencia buscarAgenciaID(@PathVariable("id")Long id){
-//		return this.agenciaService.buscarAgenciaID(id);
-//	}
+	
+	//MÉTODO PARA SALVAR AGENCIA
+	@PostMapping("/")
+	@ResponseStatus(HttpStatus.CREATED)
+	public void salvarAgencia(@RequestBody Agencia agencia) {
+		this.agenciaService.salvarAgencia(agencia);
+	}
+		
+	
+	//MÉTODO PARA ALTERAR AGENCIA
+	@PutMapping("/{id}")
+	public void alterarAgencia(@PathVariable("id") Long id, @RequestBody Agencia agencia) {
+		this.agenciaService.atualizarAgencia(agencia, id);
+	}
+	
+	//MÉTODO PARA DELETAR AGENCIA
+	@DeleteMapping(value = "/{id}", produces = "application/text")
+	public String excluirAgencia(@PathVariable("id") Long id) {
+		
+		this.agenciaService.excluirAgencia(id);
+		
+		return "Agencia de ID " + id + " foi deletada com sucesso!";
+				
+	}
+	
+	//MÉTODO PARA BUSCAR AGENCIA POR ID
+	@GetMapping("/{id}")
+	public Agencia buscarAgenciaID(@PathVariable("id")Long id){
+		return this.agenciaService.buscarAgenciaID(id);
+	}
 		
 		
 

@@ -28,6 +28,7 @@ public class ClienteController {
 	
 	//MÉTODO PARA BUSCAR TODOS OS CLIENTES
 	@GetMapping("/")
+	@PreAuthorize("hasRole('ANALISTA')")
 	public List<Cliente> buscarClientes(Pageable pageable){
 		return this.clienteService.buscarClientes(pageable);
 	}

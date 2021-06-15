@@ -54,17 +54,6 @@ public class Analista {
 		this.cliente = cliente;
 		this.agencia = agencia;
 	}
-
-
-	public boolean removerConta(int idConta) {
-		return false;
-		
-	}
-	
-	public boolean validarConta(int idConta) {
-		return false;
-		
-	}
 	
 	@Override
 	public int hashCode() {
