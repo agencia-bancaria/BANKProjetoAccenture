@@ -2,9 +2,8 @@ package com.accenture.academico.service;
 
 import java.util.List;
 
-import java.util.Optional;
 
-import org.springframework.data.domain.Pageable;
+import java.util.Optional;
 import org.springframework.http.HttpStatus;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +20,8 @@ public class ContaDigitalService {
 	private ContaDigitalRepository contaDigitalRepository;
 	
 	//MÉTODO PARA BUSCAR TODAS AS CONTAS DIGITAL
-	public List<ContaDigital> buscarContaDigital(Pageable pageable){
-		return this.contaDigitalRepository.findAll(pageable).getContent();
+	public List<ContaDigital> buscarContaDigital(){
+		return this.contaDigitalRepository.findAll();
 	}
 	
 	//MÉTODO PARA SALVAR CONTA DIGITAL

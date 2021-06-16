@@ -23,7 +23,7 @@ public class Agencia implements Serializable{
 
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name = "idAgencia")
 	private Long idAgencia;
 	

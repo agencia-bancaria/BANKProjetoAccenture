@@ -1,6 +1,7 @@
 package com.accenture.academico.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 
 import com.accenture.academico.model.ContaDigital;
@@ -26,8 +26,8 @@ public class ContaDigitalController {
 	
 	//MÉTODO PARA BUSCAR TODAS AS CONTAS DIGITAL
 	@GetMapping("/")
-	public List<ContaDigital> buscarContaDigital(Pageable pageable){
-		return this.contaDigitalService.buscarContaDigital(pageable);
+	public List<ContaDigital> buscarContaDigital(){
+		return this.contaDigitalService.buscarContaDigital();
 	}
 	
 	

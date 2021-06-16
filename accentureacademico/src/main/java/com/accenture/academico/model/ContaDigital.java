@@ -9,8 +9,10 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -38,8 +40,8 @@ public class ContaDigital implements Serializable{
 	@Column(name = "saldo")
 	private double contaSaldo;
 	
-	@OneToOne
-	@JoinColumn(name="cliente_id")
+	@OneToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name = "fk_cliente_id", foreignKey = @ForeignKey(name = "fk_cliente_id"), referencedColumnName = "idCliente")
 	private Cliente cliente;
 	
 	@OneToMany

@@ -3,6 +3,7 @@ package com.accenture.academico.service;
 import java.util.List;
 
 
+
 import java.util.Optional;
 
 import org.springframework.beans.BeanUtils;
@@ -20,9 +21,6 @@ public class AnalistaService {
 	@Autowired
 	private AnalistaRepository analistaRepository;
 	
-	@Autowired
-	private AgenciaService agenciaService;
-	
 	// METODO PARA BUSCAR TODOS OS ANALISTAS
 	public List<Analista> buscarAnalistas(){
 		return this.analistaRepository.findAll();
@@ -30,11 +28,6 @@ public class AnalistaService {
 	
 	
 	//MÉTODO PARA SALVAR ANALISTA
-	public void salvarAnalista(Long idAgencia, String cpf, String nome, String telefone) {
-		
-		this.analistaRepository.save(new Analista(nome,  cpf,  telefone, agenciaService.buscarAgenciaID(idAgencia)));
-	}
-	
 	public void salvarAnalista(Analista analista) {
 		
 		this.analistaRepository.save(analista);

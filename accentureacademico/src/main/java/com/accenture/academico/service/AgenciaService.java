@@ -29,19 +29,20 @@ public class AgenciaService {
 	
 	
 	//MÉTODO PARA SALVAR AGENCIA
-	public void salvarAgencia(LocalDate dataAbertura, String nomeAgencia, String telefone, String numeroAgencia) {
-		this.agenciaRepository.save(new Agencia(nomeAgencia, numeroAgencia, telefone, dataAbertura));
-	}
-	
 	public void salvarAgencia(Agencia agencia) {
+//		Agencia agencia = new Agencia();
+//		agencia.setDataAbertura(dataAbertura);
+//		agencia.setNomeAgencia(nomeAgencia);
+//		agencia.setNumeroAgencia(numeroAgencia);
+//		agencia.setTelefoneAgencia(telefoneAgencia);
 		this.agenciaRepository.save(agencia);
 	}
 	
 	
 	//MÉTODO PARA ALTERAR AGENCIA
-	public void atualizarAgencia(String nomeAgencia, String telefone, String numeroAgencia, Long id) {
+	public void atualizarAgencia(Agencia novaAgencia, Long id) {
 		Agencia agenciaBD = this.agenciaRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Agencia não encontrada"));
-		Agencia novaAgencia = new Agencia(nomeAgencia, numeroAgencia, telefone, agenciaBD.getDataAbertura());
+//		Agencia novaAgencia = new Agencia(nomeAgencia, numeroAgencia, telefone, agenciaBD.getDataAbertura());
 		novaAgencia.setIdAgencia(id);
 	    BeanUtils.copyProperties(novaAgencia, agenciaBD, "id");
 	    this.salvarAgencia(agenciaBD);

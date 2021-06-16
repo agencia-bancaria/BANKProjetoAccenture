@@ -1,11 +1,9 @@
 package com.accenture.academico.controller;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -38,15 +36,15 @@ public class AgenciaController {
 	//MÉTODO PARA SALVAR AGENCIA
 	@PostMapping("/")
 	@ResponseStatus(HttpStatus.CREATED)
-	public void salvarAgencia(@RequestBody String nomeAgencia, String telefone, String numeroAgencia) {
-		this.agenciaService.salvarAgencia(LocalDate.now(), nomeAgencia, telefone, numeroAgencia);
+	public void salvarAgencia(@RequestBody Agencia agencia) {
+		this.agenciaService.salvarAgencia(agencia);
 	}
 		
 	
 	//MÉTODO PARA ALTERAR AGENCIA
 	@PutMapping("/{id}")
-	public void alterarAgencia(@PathVariable("id") Long id, @RequestBody String nomeAgencia, String telefone, String numeroAgencia) {
-		this.agenciaService.atualizarAgencia(nomeAgencia, telefone, numeroAgencia, id);
+	public void alterarAgencia(@PathVariable("id") Long id, @RequestBody Agencia agencia) {
+		this.agenciaService.atualizarAgencia(agencia, id);
 	}
 	
 	//MÉTODO PARA DELETAR AGENCIA
