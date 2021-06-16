@@ -1,9 +1,5 @@
 package com.accenture.academico.model;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,13 +8,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.validation.constraints.NotEmpty;
-
-import org.hibernate.annotations.ForeignKey;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import lombok.Getter;
+import lombok.Setter;
 
 
 
@@ -31,25 +24,31 @@ public class Cliente implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "idCliente")
+	@Getter @Setter
 	private Long idCliente;
 	
 	
 	@Column(name="nome")
+	@Getter @Setter
 	private String clienteNome;
 	
 	
 	@Column(name="cpf")
+	@Getter @Setter
 	private String clienteCPF;
 	
 	@Column(name = "telefone")
-	private int clienteFone;
+	@Getter @Setter
+	private String clienteFone;
 	
 	@Column(name="senha")
+	@Getter @Setter
 	private String senha;
 	
 	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="agencia_id")
+	@Getter @Setter
 	private Agencia agencia;
 
 	
@@ -93,23 +92,14 @@ public class Cliente implements Serializable {
 		this.clienteCPF = clienteCPF;
 	}
 
-	public int getClienteFone() {
+	public String getClienteFone() {
 		return clienteFone;
 	}
 
-	public void setClienteFone(int clienteFone) {
+	public void setClienteFone(String clienteFone) {
 		this.clienteFone = clienteFone;
 	}
-	
-	public void criarConta(int idCliente, String senha) {
 		
-	}
-	
-	public void encerrarConta() {
-		
-	}
-	
-	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -134,9 +124,5 @@ public class Cliente implements Serializable {
 			return false;
 		return true;
 	}
-	
-	
-	
-	
 
 }

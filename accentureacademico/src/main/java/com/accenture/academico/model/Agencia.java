@@ -2,24 +2,17 @@ package com.accenture.academico.model;
 
 import java.io.Serializable;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-
-import com.sun.istack.NotNull;
 
 
 @Entity(name = "Agencia")
@@ -38,24 +31,24 @@ public class Agencia implements Serializable{
 	private String nomeAgencia;
 	
 	@Column(name="numeroAgencia")
-	private int numeroAgencia;
+	private String numeroAgencia;
 	
 	@Column(name="telefoneAgencia")
-	private int telefoneAgencia;
+	private String telefoneAgencia;
 	
 	@Column(name="dataAbertura")
-	private Date dataAbertura;
+	private LocalDate  dataAbertura;
 	
 	@OneToMany
 	@JoinColumn(name = "conta_id")
 	private List<ContaDigital> contas = new ArrayList<ContaDigital>();
 	
 	
-	public Date getDataAbertura() {
+	public LocalDate  getDataAbertura() {
 		return dataAbertura;
 	}
 
-	public void setDataAbertura(Date dataAbertura) {
+	public void setDataAbertura(LocalDate  dataAbertura) {
 		this.dataAbertura = dataAbertura;
 	}
 
@@ -67,11 +60,11 @@ public class Agencia implements Serializable{
 		this.contas = contas;
 	}
 
-	public int getTelefoneAgencia() {
+	public String getTelefoneAgencia() {
 		return telefoneAgencia;
 	}
 
-	public void setTelefoneAgencia(int telefoneAgencia) {
+	public void setTelefoneAgencia(String telefoneAgencia) {
 		this.telefoneAgencia = telefoneAgencia;
 	}
 
@@ -91,11 +84,11 @@ public class Agencia implements Serializable{
 		this.nomeAgencia = nomeAgencia;
 	}
 
-	public int getNumeroAgencia() {
+	public String getNumeroAgencia() {
 		return numeroAgencia;
 	}
 
-	public void setNumeroAgencia(int numeroAgencia) {
+	public void setNumeroAgencia(String numeroAgencia) {
 		this.numeroAgencia = numeroAgencia;
 	}
 	
@@ -103,7 +96,7 @@ public class Agencia implements Serializable{
 		
 	}
 
-	public Agencia(String nomeAgencia, int numeroAgencia, int telefoneAgencia, Date dataAbertura) {
+	public Agencia(String nomeAgencia, String numeroAgencia, String telefoneAgencia, LocalDate  dataAbertura) {
 		this.nomeAgencia = nomeAgencia;
 		this.numeroAgencia = numeroAgencia;
 		this.telefoneAgencia = telefoneAgencia;
@@ -134,12 +127,6 @@ public class Agencia implements Serializable{
 		} else if (!idAgencia.equals(other.idAgencia))
 			return false;
 		return true;
-	}
-	
-	public List<ContaDigital> listarContas(){
-		return getContas();
-	}
-		
-	
+	}	
 
 }

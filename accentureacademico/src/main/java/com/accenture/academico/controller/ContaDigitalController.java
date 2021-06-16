@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.access.prepost.PreAuthorize;
 
 import com.accenture.academico.model.ContaDigital;
 import com.accenture.academico.service.ContaDigitalService;
@@ -27,7 +26,6 @@ public class ContaDigitalController {
 	
 	//MÉTODO PARA BUSCAR TODAS AS CONTAS DIGITAL
 	@GetMapping("/")
-	@PreAuthorize("hasRole('ANALISTA')")
 	public List<ContaDigital> buscarContaDigital(Pageable pageable){
 		return this.contaDigitalService.buscarContaDigital(pageable);
 	}
@@ -35,7 +33,6 @@ public class ContaDigitalController {
 	
 	//MÉTODO PARA SALVAR CONTAS DIGITAL
 	@PostMapping("/")
-	@PreAuthorize("hasRole('ANALISTA')")
 	@ResponseStatus(HttpStatus.CREATED)
 	public void salvarcontaDigital(@RequestBody ContaDigital contaDigital) {
 		this.contaDigitalService.salvarContaDigital(contaDigital);
@@ -51,7 +48,6 @@ public class ContaDigitalController {
 	
 	//MÉTODO PARA DELETAR CONTA DIGITAL
 	@DeleteMapping(value = "/{id}", produces = "application/text")
-	@PreAuthorize("hasRole('ANALISTA')")
 	public String excluircontaDigital(@PathVariable("id") Long id) {
 		this.contaDigitalService.excluirContaDigital(id);
 		
@@ -61,7 +57,6 @@ public class ContaDigitalController {
 	
 	//MÉTODO PARA BUSCAR CONTADIGITAL POR ID
 	@GetMapping("/{id}")
-	@PreAuthorize("hasRole('ANALISTA')")
 	public ContaDigital buscarcontaDigitalID(@PathVariable("id") Long id) {
 		return this.contaDigitalService.buscarContaDigitalID(id);
 	}

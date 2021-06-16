@@ -1,20 +1,15 @@
 package com.accenture.academico.model;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import com.sun.istack.NotNull;
 
 @Entity(name = "Analista")
 public class Analista {
@@ -31,7 +26,7 @@ public class Analista {
 	private String cpfAnalista;
 	
 	@Column(name="telefoneAnalista")
-	private int telefoneAnalista;
+	private String telefoneAnalista;
 	
 	@OneToMany
 	@JoinColumn(name="cliente_id")
@@ -44,7 +39,16 @@ public class Analista {
 		
 	}
 	
-	public Analista(Long idAnalista, String nomeAnalista, String cpfAnalista, int telefoneAnalista,
+	public Analista(String nomeAnalista, String cpfAnalista, String telefoneAnalista, Agencia agencia) {
+		super();
+		
+		this.nomeAnalista = nomeAnalista;
+		this.cpfAnalista = cpfAnalista;
+		this.telefoneAnalista = telefoneAnalista;
+		this.agencia = agencia;
+	}
+	
+	public Analista(Long idAnalista, String nomeAnalista, String cpfAnalista, String telefoneAnalista,
 			List<Cliente> cliente, Agencia agencia) {
 		super();
 		this.idAnalista = idAnalista;
@@ -54,18 +58,55 @@ public class Analista {
 		this.cliente = cliente;
 		this.agencia = agencia;
 	}
-
-
-	public boolean removerConta(int idConta) {
-		return false;
-		
-	}
 	
-	public boolean validarConta(int idConta) {
-		return false;
-		
+	public Long getIdAnalista() {
+		return idAnalista;
 	}
-	
+
+	public void setIdAnalista(Long idAnalista) {
+		this.idAnalista = idAnalista;
+	}
+
+	public String getNomeAnalista() {
+		return nomeAnalista;
+	}
+
+	public void setNomeAnalista(String nomeAnalista) {
+		this.nomeAnalista = nomeAnalista;
+	}
+
+	public String getCpfAnalista() {
+		return cpfAnalista;
+	}
+
+	public void setCpfAnalista(String cpfAnalista) {
+		this.cpfAnalista = cpfAnalista;
+	}
+
+	public String getTelefoneAnalista() {
+		return telefoneAnalista;
+	}
+
+	public void setTelefoneAnalista(String telefoneAnalista) {
+		this.telefoneAnalista = telefoneAnalista;
+	}
+
+	public List<Cliente> getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(List<Cliente> cliente) {
+		this.cliente = cliente;
+	}
+
+	public Agencia getAgencia() {
+		return agencia;
+	}
+
+	public void setAgencia(Agencia agencia) {
+		this.agencia = agencia;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

@@ -3,6 +3,7 @@ package com.accenture.academico.model;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -29,7 +30,7 @@ public class ContaDigital implements Serializable{
 	private Long idConta;
 	
 	@Column(name = "dataCriacao")
-	private Date dataCriacao;
+	private LocalDate dataCriacao;
 	
 	@Column(name = "NumConta")
 	private int contaNumero;
@@ -46,11 +47,11 @@ public class ContaDigital implements Serializable{
 	private List<Operacao> operacoes = new ArrayList<Operacao>();
 
 	
-	public Date getDataCriacao() {
+	public LocalDate getDataCriacao() {
 		return dataCriacao;
 	}
 
-	public void setDataCriacao(Date dataCriacao) {
+	public void setDataCriacao(LocalDate dataCriacao) {
 		this.dataCriacao = dataCriacao;
 	}
 
@@ -139,6 +140,7 @@ public class ContaDigital implements Serializable{
 			
 		}
 		
+		//debitar um valor do saldo
 		public boolean debitar(double valor) {
 			try {
 				if(valor < getContaSaldo()) {
@@ -167,7 +169,7 @@ public class ContaDigital implements Serializable{
 			
 		}
 		
-		//realiza o saque de uma conta e deposita numa conta de destino
+		//realiza o saque de uma conta e deposito numa conta de destino
 		public boolean transferir(ContaDigital contaDestino, double valor) {
 			try {
 				if(debitar(valor)) {
@@ -201,6 +203,7 @@ public class ContaDigital implements Serializable{
 			return false;		
 		}
 		
+		//EXTRATO TOTAL
 		public List<Operacao> extrato() {
 			try {
 				return getOperacoes();
@@ -210,6 +213,7 @@ public class ContaDigital implements Serializable{
 			return new ArrayList<Operacao>();
 		}
 		
+		// EXTRATO A PARTIR DE UMA DATA INICIO ATÉ A DATA ATUAL
 		public List<Operacao> extratoTempo(Date dataInicio) throws ParseException {
 			SimpleDateFormat formatador = new SimpleDateFormat("dd/MM/yyyy"); 
 			ArrayList<Operacao> operacoesExtrato = new ArrayList<Operacao>();
@@ -232,4 +236,15 @@ public class ContaDigital implements Serializable{
 			
 			return operacoesExtrato;
 		}
+		
+		public ContaDigital() {
+			
+		}
+		
+		public ContaDigital(LocalDate dataAgora, double saldo, Cliente cliente){
+			this.dataCriacao = dataAgora;
+			this.contaSaldo = saldo;
+			this.cliente = cliente;
+		}
+		
 }
