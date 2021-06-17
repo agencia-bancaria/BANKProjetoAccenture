@@ -1,13 +1,7 @@
 package com.accenture.academico.model;
 
 import java.io.Serializable;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -17,37 +11,46 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
-@Entity(name="ContaDigital")
-public class ContaDigital implements Serializable{
+@Entity(name = "ContaDigital")
+public class ContaDigital implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private static final double valorSaqueMinimo = 20;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "idConta")
 	private Long idConta;
-	
+
 	@Column(name = "dataCriacao")
 	private LocalDate dataCriacao;
-	
+
 	@Column(name = "NumConta")
 	private int contaNumero;
-	
+
 	@Column(name = "saldo")
 	private double contaSaldo;
-	
-	@OneToOne(cascade=CascadeType.ALL)
+
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "fk_cliente_id", foreignKey = @ForeignKey(name = "fk_cliente_id"), referencedColumnName = "idCliente")
 	private Cliente cliente;
 	
-	@OneToMany
-	@JoinColumn(name = "operacao_id")
-	private List<Operacao> operacoes = new ArrayList<Operacao>();
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "fk_agencia_id", foreignKey = @ForeignKey(name = "fk_agencia_id"), referencedColumnName = "idAgencia")
+	private Agencia agencia;
+	
+	public ContaDigital() {
 
+	}
+	
+	public ContaDigital(LocalDate dataAgora, double saldo, Cliente cliente) {
+		this.dataCriacao = dataAgora;
+		this.contaSaldo = saldo;
+		this.cliente = cliente;
+	}
 	
 	public LocalDate getDataCriacao() {
 		return dataCriacao;
@@ -56,15 +59,7 @@ public class ContaDigital implements Serializable{
 	public void setDataCriacao(LocalDate dataCriacao) {
 		this.dataCriacao = dataCriacao;
 	}
-
-	public List<Operacao> getOperacoes() {
-		return operacoes;
-	}
-
-	public void setOperacoes(List<Operacao> operacoes) {
-		this.operacoes = operacoes;
-	}
-
+	
 	public Long getIdConta() {
 		return idConta;
 	}
@@ -72,7 +67,6 @@ public class ContaDigital implements Serializable{
 	public void setIdConta(Long idConta) {
 		this.idConta = idConta;
 	}
-
 
 	public int getContaNumero() {
 		return contaNumero;
@@ -96,6 +90,14 @@ public class ContaDigital implements Serializable{
 
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
+	}
+	
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	public static double getValorsaqueminimo() {
+		return valorSaqueMinimo;
 	}
 
 	@Override
@@ -122,131 +124,4 @@ public class ContaDigital implements Serializable{
 			return false;
 		return true;
 	}
-	
-	//realiza o saque da conta e retorna true se a operaçao for bem sucedida
-		public boolean sacar(double valor) {
-			try {
-				if(valor >= valorSaqueMinimo && valor < getContaSaldo()) {
-					setContaSaldo(getContaSaldo() - valor);
-					Date today = Calendar.getInstance().getTime();
-					Operacao operacao = new Operacao(today, TipoOperacao.SAQUE, valor);
-					this.operacoes.add(operacao);
-					return true;
-				}else {
-					return false;
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			return false;
-			
-		}
-		
-		//debitar um valor do saldo
-		public boolean debitar(double valor) {
-			try {
-				if(valor < getContaSaldo()) {
-					setContaSaldo(getContaSaldo() - valor);
-					return true;
-				}else {
-					return false;
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			return false;
-			
-		}	
-		
-		//realiza o deposito e retorna true se for bem sucedida
-		public void depositar(double valor) {
-			try {
-				setContaSaldo(getContaSaldo() + valor);
-				Date today = Calendar.getInstance().getTime();
-				Operacao operacao = new Operacao(today, TipoOperacao.DEPOSITO, valor);
-				this.operacoes.add(operacao);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			
-		}
-		
-		//realiza o saque de uma conta e deposito numa conta de destino
-		public boolean transferir(ContaDigital contaDestino, double valor) {
-			try {
-				if(debitar(valor)) {
-					contaDestino.depositar(valor);
-					Date today = Calendar.getInstance().getTime();
-					Operacao operacao = new Operacao(today, TipoOperacao.TRANSFERENCIA, valor);
-					this.operacoes.add(operacao);
-					return true;
-				}else {
-					return false;
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			return false;
-		}
-		
-		public boolean pagamento(double valor) {
-			try {
-				if(debitar(valor)) {
-					Date today = Calendar.getInstance().getTime();
-					Operacao operacao = new Operacao(today, TipoOperacao.PAGAMENTO, valor);
-					this.operacoes.add(operacao);
-					return true;
-				}else {
-					return false;
-				}	
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			return false;		
-		}
-		
-		//EXTRATO TOTAL
-		public List<Operacao> extrato() {
-			try {
-				return getOperacoes();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			return new ArrayList<Operacao>();
-		}
-		
-		// EXTRATO A PARTIR DE UMA DATA INICIO ATÉ A DATA ATUAL
-		public List<Operacao> extratoTempo(Date dataInicio) throws ParseException {
-			SimpleDateFormat formatador = new SimpleDateFormat("dd/MM/yyyy"); 
-			ArrayList<Operacao> operacoesExtrato = new ArrayList<Operacao>();
-			
-			try {
-				
-				for (Operacao operacao : operacoes) {
-					
-					Date dataOperacao = formatador.parse(formatador.format(operacao.getDataHoraOperacao()));
-					Date dataInicioExtrato = formatador.parse(formatador.format(dataInicio));
-					
-					if(dataOperacao.compareTo(dataInicioExtrato) >= 0)
-						operacoesExtrato.add(operacao);
-				}
-				
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			
-			
-			return operacoesExtrato;
-		}
-		
-		public ContaDigital() {
-			
-		}
-		
-		public ContaDigital(LocalDate dataAgora, double saldo, Cliente cliente){
-			this.dataCriacao = dataAgora;
-			this.contaSaldo = saldo;
-			this.cliente = cliente;
-		}
-		
 }

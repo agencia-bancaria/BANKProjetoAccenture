@@ -1,9 +1,5 @@
 package com.accenture.academico.model;
 
-import java.util.ArrayList;
-
-import java.util.List;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,7 +7,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.ForeignKey;
 
@@ -32,10 +27,6 @@ public class Analista {
 	@Column(name="telefoneAnalista")
 	private String telefoneAnalista;
 	
-	@OneToMany
-	@JoinColumn(name="cliente_id")
-	private List<Cliente> cliente = new ArrayList<Cliente>();
-	
 	@OneToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name = "fk_agencia_id", foreignKey = @ForeignKey(name = "fk_agencia_id"), referencedColumnName = "idAgencia")
 	private Agencia agencia;
@@ -53,14 +44,13 @@ public class Analista {
 		this.agencia = agencia;
 	}
 	
-	public Analista(Long idAnalista, String nomeAnalista, String cpfAnalista, String telefoneAnalista,
-			List<Cliente> cliente, Agencia agencia) {
+	public Analista(Long idAnalista, String nomeAnalista, String cpfAnalista, 
+			String telefoneAnalista, Agencia agencia) {
 		super();
 		this.idAnalista = idAnalista;
 		this.nomeAnalista = nomeAnalista;
 		this.cpfAnalista = cpfAnalista;
 		this.telefoneAnalista = telefoneAnalista;
-		this.cliente = cliente;
 		this.agencia = agencia;
 	}
 	
@@ -94,14 +84,6 @@ public class Analista {
 
 	public void setTelefoneAnalista(String telefoneAnalista) {
 		this.telefoneAnalista = telefoneAnalista;
-	}
-
-	public List<Cliente> getCliente() {
-		return cliente;
-	}
-
-	public void setCliente(List<Cliente> cliente) {
-		this.cliente = cliente;
 	}
 
 	public Agencia getAgencia() {

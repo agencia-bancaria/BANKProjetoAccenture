@@ -6,16 +6,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import lombok.Getter;
-import lombok.Setter;
-
-
+import lombok.Data;
 
 @Entity(name = "Cliente")
+@Data
 public class Cliente implements Serializable {
 	
 	
@@ -24,33 +19,21 @@ public class Cliente implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "idCliente")
-	@Getter @Setter
 	private Long idCliente;
 	
 	
 	@Column(name="nome")
-	@Getter @Setter
 	private String clienteNome;
 	
 	
 	@Column(name="cpf")
-	@Getter @Setter
 	private String clienteCPF;
 	
 	@Column(name = "telefone")
-	@Getter @Setter
 	private String clienteFone;
 	
 	@Column(name="senha")
-	@Getter @Setter
 	private String senha;
-	
-	@JsonIgnore
-	@ManyToOne
-	@JoinColumn(name="agencia_id")
-	@Getter @Setter
-	private Agencia agencia;
-
 	
 	public String getSenha() {
 		return senha;
@@ -58,14 +41,6 @@ public class Cliente implements Serializable {
 
 	public void setSenha(String senha) {
 		this.senha = senha;
-	}
-
-	public Agencia getAgencia() {
-		return agencia;
-	}
-
-	public void setAgencia(Agencia agencia) {
-		this.agencia = agencia;
 	}
 
 	public Long getIdCliente() {

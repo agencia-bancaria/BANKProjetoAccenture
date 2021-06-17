@@ -49,7 +49,7 @@ public class AgenciaController {
 	
 	//MÉTODO PARA DELETAR AGENCIA
 	@DeleteMapping(value = "/{id}", produces = "application/text")
-	public String excluirAgencia(@PathVariable("id") Long id) {
+	public String excluirAgencia(@PathVariable("Id") Long id) {
 		
 		this.agenciaService.excluirAgencia(id);
 		

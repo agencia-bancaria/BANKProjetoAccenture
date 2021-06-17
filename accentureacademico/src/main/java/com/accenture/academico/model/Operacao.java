@@ -2,10 +2,10 @@ package com.accenture.academico.model;
 
 import java.util.Date;
 
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -33,9 +33,19 @@ public class Operacao {
 	
 	@NotNull()
 	@ManyToOne(cascade=CascadeType.ALL)
-    @JoinColumn(name = "conta_id")
+	@JoinColumn(name = "fk_conta_id", foreignKey = @ForeignKey(name = "fk_conta_id"), referencedColumnName = "idConta")
 	private ContaDigital conta;
-
+	
+	public Operacao() {
+		
+	}
+	
+	public Operacao(Date dataHoraOperacao, TipoOperacao tipoOperacao, double valor, ContaDigital conta) {
+		this.dataHoraOperacao = dataHoraOperacao;
+		this.tipoOperacao = tipoOperacao;
+		this.valor = valor;
+		this.conta = conta;
+	}
 	public Long getIdOperacao() {
 		return idOperacao;
 	}
@@ -67,16 +77,5 @@ public class Operacao {
 	public void setValor(double valor) {
 		this.valor = valor;
 	}
-	
-	public Operacao() {
 		
-	}
-	
-	public Operacao(Date dataHoraOperacao, TipoOperacao tipoOperacao, double valor) {
-		this.dataHoraOperacao = dataHoraOperacao;
-		this.tipoOperacao = tipoOperacao;
-		this.valor = valor;
-	}
-	
-	
 }

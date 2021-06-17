@@ -3,19 +3,18 @@ package com.accenture.academico.model;
 import java.io.Serializable;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+
+import lombok.Data;
 
 
 @Entity(name = "Agencia")
+@Data
 public class Agencia implements Serializable{
 	
 	
@@ -38,26 +37,13 @@ public class Agencia implements Serializable{
 	
 	@Column(name="dataAbertura")
 	private LocalDate  dataAbertura;
-	
-	@OneToMany
-	@JoinColumn(name = "conta_id")
-	private List<ContaDigital> contas = new ArrayList<ContaDigital>();
-	
-	
+		
 	public LocalDate  getDataAbertura() {
 		return dataAbertura;
 	}
 
 	public void setDataAbertura(LocalDate  dataAbertura) {
 		this.dataAbertura = dataAbertura;
-	}
-
-	public List<ContaDigital> getContas() {
-		return contas;
-	}
-
-	public void setContas(List<ContaDigital> contas) {
-		this.contas = contas;
 	}
 
 	public String getTelefoneAgencia() {

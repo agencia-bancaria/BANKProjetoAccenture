@@ -15,50 +15,78 @@ import java.util.List;
 import org.springframework.http.HttpStatus;
 
 import com.accenture.academico.model.ContaDigital;
+import com.accenture.academico.model.Operacao;
 import com.accenture.academico.service.ContaDigitalService;
 
-@RestController //recebe requisições restful
+@RestController // recebe requisições restful
 @RequestMapping(value = "/contaDigital")
 public class ContaDigitalController {
-	
+
 	@Autowired
 	private ContaDigitalService contaDigitalService;
-	
-	//MÉTODO PARA BUSCAR TODAS AS CONTAS DIGITAL
+
+	// MÉTODO PARA BUSCAR TODAS AS CONTAS DIGITAL
 	@GetMapping("/")
-	public List<ContaDigital> buscarContaDigital(){
+	public List<ContaDigital> buscarContaDigital() {
 		return this.contaDigitalService.buscarContaDigital();
 	}
-	
-	
-	//MÉTODO PARA SALVAR CONTAS DIGITAL
+
+	// MÉTODO PARA SALVAR CONTAS DIGITAL
 	@PostMapping("/")
 	@ResponseStatus(HttpStatus.CREATED)
 	public void salvarcontaDigital(@RequestBody ContaDigital contaDigital) {
 		this.contaDigitalService.salvarContaDigital(contaDigital);
 	}
-	
-	
-	//MÉTODO PARA ALTERAR CONTA DIGITAL
+
+	// MÉTODO PARA ALTERAR CONTA DIGITAL
 	@PutMapping("/{id}")
 	public void alterarcontaDigital(@PathVariable("id") Long id, @RequestBody ContaDigital contaDigital) {
 		this.contaDigitalService.alterarContaDigital(contaDigital, id);
 	}
-	
-	
-	//MÉTODO PARA DELETAR CONTA DIGITAL
+
+	// MÉTODO PARA DELETAR CONTA DIGITAL
 	@DeleteMapping(value = "/{id}", produces = "application/text")
 	public String excluircontaDigital(@PathVariable("id") Long id) {
 		this.contaDigitalService.excluirContaDigital(id);
-		
-		return "Conta corrente de ID " +id+ " foi deletada com sucesso";
+
+		return "Conta corrente de ID " + id + " foi deletada com sucesso";
 	}
-	
-	
-	//MÉTODO PARA BUSCAR CONTADIGITAL POR ID
+
+	// MÉTODO PARA BUSCAR CONTADIGITAL POR ID
 	@GetMapping("/{id}")
 	public ContaDigital buscarcontaDigitalID(@PathVariable("id") Long id) {
 		return this.contaDigitalService.buscarContaDigitalID(id);
+	}
+
+	// MÉTODO SAQUE
+	@PutMapping("/saque/{id}")
+	public void saque(@PathVariable("id") Long id, @RequestBody double valor) {
+		this.contaDigitalService.sacar(valor, id);
+	}
+
+	// MÉTODO DEPOSITO
+	@PutMapping("/deposito/{id}")
+	public void deposito(@PathVariable("id") Long id, @RequestBody double valor) {
+		this.contaDigitalService.depositar(valor, id);
+	}
+
+	// MÉTODO TRANSFERENCIA
+	@PutMapping("/transferencia/{idContaOrigem}/{idContaDestino}")
+	public void transferencia(@PathVariable("idContaOrigem") Long idContaOrigem,
+			@PathVariable("idContaDestino") Long idContaDestino, @RequestBody double valor) {
+		this.contaDigitalService.transferir(idContaDestino, idContaOrigem, valor);
+	}
+
+	// MÉTODO PAGAMENTO
+	@PutMapping("/pagamento/{id}")
+	public void pagamento(@PathVariable("id") Long id, @RequestBody double valor) {
+		this.contaDigitalService.pagamento(valor, id);
+	}
+
+	// MÉTODO PARA BUSCAR EXTRATO POR CONTA
+	@GetMapping("/extrato/{id}")
+	public List<Operacao> extratoPorConta(@PathVariable("id") Long id) {
+		return this.contaDigitalService.extrato(id);
 	}
 
 }
