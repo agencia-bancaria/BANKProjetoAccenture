@@ -16,6 +16,7 @@ import com.accenture.academico.exceptions.OperacaoInvalidaException;
 import com.accenture.academico.model.ContaDigital;
 import com.accenture.academico.model.Operacao;
 import com.accenture.academico.model.TipoOperacao;
+import com.accenture.academico.repository.ClienteRepository;
 import com.accenture.academico.repository.ContaDigitalRepository;
 import com.accenture.academico.repository.OperacaoRepository;
 import com.sun.el.parser.ParseException;
@@ -27,6 +28,8 @@ public class ContaDigitalService {
 	private ContaDigitalRepository contaDigitalRepository;
 	@Autowired
 	private OperacaoRepository operacaoRepository;
+	@Autowired
+	private ClienteService clienteService;
 
 	// MÉTODO PARA BUSCAR TODAS AS CONTAS DIGITAL
 	public List<ContaDigital> buscarContaDigital() {
@@ -35,7 +38,11 @@ public class ContaDigitalService {
 
 	// MÉTODO PARA SALVAR CONTA DIGITAL
 	public void salvarContaDigital(ContaDigital contaDigital) {
-		this.contaDigitalRepository.save(contaDigital);
+		if(clienteService.buscarClienteID(contaDigital.getCliente().getIdCliente()) != null) {
+			throw new OperacaoInvalidaException("Cliente Já Possui Conta!");
+		} else {
+			this.contaDigitalRepository.save(contaDigital);
+		}		
 	}
 
 	// MÉTODO PARA ALTERAR CONTA DIGITAL

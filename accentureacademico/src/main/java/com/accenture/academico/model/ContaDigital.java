@@ -1,9 +1,9 @@
 package com.accenture.academico.model;
 
 import java.io.Serializable;
+
 import java.time.LocalDate;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
@@ -33,25 +33,46 @@ public class ContaDigital implements Serializable {
 
 	@Column(name = "saldo")
 	private double contaSaldo;
-
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "fk_cliente_id", foreignKey = @ForeignKey(name = "fk_cliente_id"), referencedColumnName = "idCliente")
+	
+	@Column(name="senha")
+	private String senha;
+	
+	@OneToOne
+	@JoinColumn(name = "fk_cliente_id", foreignKey = @ForeignKey(name = "fk_cliente_id"), referencedColumnName = "idCliente", unique=true)
 	private Cliente cliente;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "fk_agencia_id", foreignKey = @ForeignKey(name = "fk_agencia_id"), referencedColumnName = "idAgencia")
+	@ManyToOne
+	@JoinColumn(name = "idAgencia", foreignKey = @ForeignKey(name = "idAgencia"), referencedColumnName = "idAgencia")
 	private Agencia agencia;
 	
 	public ContaDigital() {
 
 	}
 	
-	public ContaDigital(LocalDate dataAgora, double saldo, Cliente cliente) {
+	public ContaDigital(LocalDate dataAgora, double saldo, String senha, Cliente cliente, Agencia agencia) {
 		this.dataCriacao = dataAgora;
 		this.contaSaldo = saldo;
+		this.senha = senha;
 		this.cliente = cliente;
+		this.agencia = agencia;
 	}
 	
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
+	
+	public Agencia getAgencia() {
+		return agencia;
+	}
+
+	public void setAgencia(Agencia agencia) {
+		this.agencia = agencia;
+	}
+
 	public LocalDate getDataCriacao() {
 		return dataCriacao;
 	}

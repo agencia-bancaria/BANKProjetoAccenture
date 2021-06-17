@@ -32,17 +32,6 @@ public class Cliente implements Serializable {
 	@Column(name = "telefone")
 	private String clienteFone;
 	
-	@Column(name="senha")
-	private String senha;
-	
-	public String getSenha() {
-		return senha;
-	}
-
-	public void setSenha(String senha) {
-		this.senha = senha;
-	}
-
 	public Long getIdCliente() {
 		return idCliente;
 	}

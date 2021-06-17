@@ -16,53 +16,50 @@ import org.springframework.web.bind.annotation.RestController;
 import com.accenture.academico.model.Agencia;
 import com.accenture.academico.service.AgenciaService;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
-
-@RestController //recebe requisições restful
+@RestController // recebe requisições restful
 @RequestMapping(value = "/agencias")
+@SecurityRequirement(name = "accenture")
 public class AgenciaController {
-	
+
 	@Autowired
 	private AgenciaService agenciaService;
-	
-	
-	//METODO PARA BUSCAR TODAS AS AGENCIAS
+
+	// METODO PARA BUSCAR TODAS AS AGENCIAS
 	@GetMapping("/")
 //	@PreAuthorize("hasRole('ANALISTA')")
-    public List<Agencia> buscarAgencia(){
+	public List<Agencia> buscarAgencia() {
 		return this.agenciaService.buscarAgencias();
 	}
-			    
-	//MÉTODO PARA SALVAR AGENCIA
+
+	// MÉTODO PARA SALVAR AGENCIA
 	@PostMapping("/")
 	@ResponseStatus(HttpStatus.CREATED)
 	public void salvarAgencia(@RequestBody Agencia agencia) {
 		this.agenciaService.salvarAgencia(agencia);
 	}
-		
-	
-	//MÉTODO PARA ALTERAR AGENCIA
+
+	// MÉTODO PARA ALTERAR AGENCIA
 	@PutMapping("/{id}")
 	public void alterarAgencia(@PathVariable("id") Long id, @RequestBody Agencia agencia) {
 		this.agenciaService.atualizarAgencia(agencia, id);
 	}
-	
-	//MÉTODO PARA DELETAR AGENCIA
+
+	// MÉTODO PARA DELETAR AGENCIA
 	@DeleteMapping(value = "/{id}", produces = "application/text")
 	public String excluirAgencia(@PathVariable("Id") Long id) {
-		
+
 		this.agenciaService.excluirAgencia(id);
-		
+
 		return "Agencia de ID " + id + " foi deletada com sucesso!";
-				
+
 	}
-	
-	//MÉTODO PARA BUSCAR AGENCIA POR ID
+
+	// MÉTODO PARA BUSCAR AGENCIA POR ID
 	@GetMapping("/{id}")
-	public Agencia buscarAgenciaID(@PathVariable("id")Long id){
+	public Agencia buscarAgenciaID(@PathVariable("id") Long id) {
 		return this.agenciaService.buscarAgenciaID(id);
 	}
-		
-		
 
 }

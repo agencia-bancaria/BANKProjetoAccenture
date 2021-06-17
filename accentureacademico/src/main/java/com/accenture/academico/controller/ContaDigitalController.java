@@ -18,8 +18,11 @@ import com.accenture.academico.model.ContaDigital;
 import com.accenture.academico.model.Operacao;
 import com.accenture.academico.service.ContaDigitalService;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+
 @RestController // recebe requisições restful
 @RequestMapping(value = "/contaDigital")
+@SecurityRequirement(name = "accenture")
 public class ContaDigitalController {
 
 	@Autowired
