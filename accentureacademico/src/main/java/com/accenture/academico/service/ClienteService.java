@@ -1,4 +1,4 @@
-package com.accenture.academico.service;
+ package com.accenture.academico.service;
 
 import java.time.LocalDate;
 
@@ -131,6 +131,7 @@ public class ClienteService {
 	//MÉTODO PARA ALTERAR CLIENTE
 	public void atualizarCliente(Cliente cliente, Long id) {
 		Cliente clienteBD = this.clienteRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Cliente não encontrado"));
+		cliente.setIdCliente(id);
 		BeanUtils.copyProperties(cliente, clienteBD, "id");
 		this.salvarCliente(clienteBD);
 	

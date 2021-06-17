@@ -11,11 +11,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
+
 import java.util.List;
 import org.springframework.http.HttpStatus;
 
 import com.accenture.academico.model.ContaDigital;
 import com.accenture.academico.model.Operacao;
+import com.accenture.academico.repository.OperacaoRepository;
 import com.accenture.academico.service.ContaDigitalService;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -27,7 +30,7 @@ public class ContaDigitalController {
 
 	@Autowired
 	private ContaDigitalService contaDigitalService;
-
+	private OperacaoRepository operacao;
 	// MÉTODO PARA BUSCAR TODAS AS CONTAS DIGITAL
 	@GetMapping("/")
 	public List<ContaDigital> buscarContaDigital() {
@@ -90,6 +93,16 @@ public class ContaDigitalController {
 	@GetMapping("/extrato/{id}")
 	public List<Operacao> extratoPorConta(@PathVariable("id") Long id) {
 		return this.contaDigitalService.extrato(id);
+	}
+	
+	@GetMapping("/teste")
+	public ModelAndView listar() {
+		List<Operacao> lista = operacao.findAll();
+		
+		ModelAndView modelAndView = new ModelAndView("operacao");		
+		modelAndView.addObject("operacao", lista);
+		
+		return modelAndView;
 	}
 
 }

@@ -1,6 +1,7 @@
 package com.accenture.academico.model;
 
-import javax.persistence.CascadeType;
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,8 +12,10 @@ import javax.persistence.OneToOne;
 import javax.persistence.ForeignKey;
 
 @Entity(name = "Analista")
-public class Analista {
+public class Analista implements Serializable{
 	
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "idAnalista")
@@ -27,7 +30,7 @@ public class Analista {
 	@Column(name="telefoneAnalista")
 	private String telefoneAnalista;
 	
-	@OneToOne(cascade=CascadeType.ALL)
+	@OneToOne
 	@JoinColumn(name = "fk_agencia_id", foreignKey = @ForeignKey(name = "fk_agencia_id"), referencedColumnName = "idAgencia")
 	private Agencia agencia;
 	

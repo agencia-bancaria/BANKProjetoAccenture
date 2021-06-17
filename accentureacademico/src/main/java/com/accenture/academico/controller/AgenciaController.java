@@ -28,7 +28,6 @@ public class AgenciaController {
 
 	// METODO PARA BUSCAR TODAS AS AGENCIAS
 	@GetMapping("/")
-//	@PreAuthorize("hasRole('ANALISTA')")
 	public List<Agencia> buscarAgencia() {
 		return this.agenciaService.buscarAgencias();
 	}
@@ -48,7 +47,7 @@ public class AgenciaController {
 
 	// MÉTODO PARA DELETAR AGENCIA
 	@DeleteMapping(value = "/{id}", produces = "application/text")
-	public String excluirAgencia(@PathVariable("Id") Long id) {
+	public String excluirAgencia(@PathVariable("id") Long id) {
 
 		this.agenciaService.excluirAgencia(id);
 

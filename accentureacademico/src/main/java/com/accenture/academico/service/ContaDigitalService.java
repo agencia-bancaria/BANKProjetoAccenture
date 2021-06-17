@@ -37,12 +37,14 @@ public class ContaDigitalService {
 	}
 
 	// MÉTODO PARA SALVAR CONTA DIGITAL
-	public void salvarContaDigital(ContaDigital contaDigital) {
-		if(clienteService.buscarClienteID(contaDigital.getCliente().getIdCliente()) != null) {
-			throw new OperacaoInvalidaException("Cliente Já Possui Conta!");
+	public void salvarContaDigital(ContaDigital contaDigital)  {
+
+		System.out.println(clienteService.buscarClienteID(contaDigital.getCliente().getIdCliente()));
+		if(clienteService.buscarClienteID(contaDigital.getCliente().getIdCliente()) == null) {
+			//tratar
 		} else {
 			this.contaDigitalRepository.save(contaDigital);
-		}		
+		}
 	}
 
 	// MÉTODO PARA ALTERAR CONTA DIGITAL
@@ -92,13 +94,17 @@ public class ContaDigitalService {
 			throw new OperacaoInvalidaException("Conta Invalida!");
 		}
 		
-		if (valor < conta.getContaSaldo()) {
+		if (valor < conta.getContaSaldo() && valor > 0) {
 			conta.setContaSaldo(conta.getContaSaldo() - valor);
 			this.alterarContaDigital(conta, idConta);
+			
 			return true;
-		} else {
-			throw new OperacaoInvalidaException("Valor Inválido!");
+		} else if(valor ==0){
+			throw new OperacaoInvalidaException("Valor nulo não é permitido!");
+		}else {
+			throw new OperacaoInvalidaException("Valor inválido!");
 		}
+		
 
 	}
 

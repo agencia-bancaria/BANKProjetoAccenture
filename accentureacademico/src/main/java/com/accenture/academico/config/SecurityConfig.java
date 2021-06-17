@@ -32,10 +32,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
         .httpBasic()
         .and()
             .authorizeRequests()
-                .antMatchers(HttpMethod.PUT, "/clientes/**").hasRole("USER")
-                .antMatchers(HttpMethod.DELETE, "/clientes/**").hasRole("user")
+                .antMatchers(HttpMethod.PUT, "/clientes/**").hasAnyRole("USER","ANALISTA")
+                .antMatchers(HttpMethod.DELETE, "/clientes/**").hasAnyRole("USER", "ANALISTA")
                 .antMatchers(HttpMethod.GET, "/clientes/**").hasRole("ANALISTA")
-                .antMatchers(HttpMethod.POST, "/clientes/").hasRole("USER")
+                .antMatchers(HttpMethod.POST, "/clientes/").hasAnyRole("USER", "ANALISTA")
               
             .and()
                 .csrf()
@@ -46,7 +46,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
         .and()
             .authorizeRequests()
                 .antMatchers(HttpMethod.PUT, "/contaDigital/**").hasRole("USER")
-                .antMatchers(HttpMethod.DELETE, "/contaDigital/**").hasRole("user")
+                .antMatchers(HttpMethod.DELETE, "/contaDigital/**").hasAnyRole("ANALISTA", "USER")
                 .antMatchers(HttpMethod.GET, "/contaDigital/**").hasRole("ANALISTA")
                 .antMatchers(HttpMethod.POST, "/contaDigital/").hasRole("USER")
               
