@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotEmpty;
 
 import lombok.Data;
 
@@ -23,22 +24,36 @@ public class Agencia implements Serializable{
 
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name = "idAgencia")
 	private Long idAgencia;
 	
+	@NotEmpty
 	@Column(name = "nomeAgencia")
 	private String nomeAgencia;
 	
+	@NotEmpty
 	@Column(name="numeroAgencia")
 	private String numeroAgencia;
 	
+	@NotEmpty
 	@Column(name="telefoneAgencia")
 	private String telefoneAgencia;
 	
 	@Column(name="dataAbertura")
 	private LocalDate  dataAbertura;
+	
+	public Agencia() {
 		
+	}
+
+	public Agencia(String nomeAgencia, String numeroAgencia, String telefoneAgencia, LocalDate  dataAbertura) {
+		this.nomeAgencia = nomeAgencia;
+		this.numeroAgencia = numeroAgencia;
+		this.telefoneAgencia = telefoneAgencia;
+		this.dataAbertura = dataAbertura;
+	}
+	
 	public LocalDate  getDataAbertura() {
 		return dataAbertura;
 	}
@@ -77,17 +92,6 @@ public class Agencia implements Serializable{
 
 	public void setNumeroAgencia(String numeroAgencia) {
 		this.numeroAgencia = numeroAgencia;
-	}
-	
-	public Agencia() {
-		
-	}
-
-	public Agencia(String nomeAgencia, String numeroAgencia, String telefoneAgencia, LocalDate  dataAbertura) {
-		this.nomeAgencia = nomeAgencia;
-		this.numeroAgencia = numeroAgencia;
-		this.telefoneAgencia = telefoneAgencia;
-		this.dataAbertura = dataAbertura;
 	}
 	
 	//Foi usado anteriormente

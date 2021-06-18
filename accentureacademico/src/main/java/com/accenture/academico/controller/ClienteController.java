@@ -1,5 +1,6 @@
 package com.accenture.academico.controller;
 
+import java.net.URI;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,10 @@ import org.springframework.http.HttpStatus;
 import com.accenture.academico.model.Cliente;
 import com.accenture.academico.service.ClienteService;
 
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
 @RestController // recebe requisições restful
@@ -28,12 +33,24 @@ public class ClienteController {
 	private ClienteService clienteService;
 
 	// MÉTODO PARA BUSCAR TODOS OS CLIENTES
+	@Operation(summary ="Lista todos os Clientes")
+	@ApiResponses(value = { 
+			@ApiResponse(code = 200, message = "Clientes listados com sucesso."),
+			@ApiResponse(code = 401, message = "Você não está autorizado a ver o recurso."),
+		    @ApiResponse(code = 403, message = "O acesso ao recurso que você estava tentando acessar é proibido."),
+		    @ApiResponse(code = 404, message = "O recurso que você estava tentando acessar não foi encontrado.")})
 	@GetMapping("/")
 	public List<Cliente> buscarClientes() {
 		return this.clienteService.buscarClientes();
 	}
 
 	// MÉTODO PARA SALVA CLIENTE
+	@Operation(summary ="Cria novo Cliente")
+	@ApiResponses(value = { 
+			@ApiResponse(code = 200, message = "Cliente criado com sucesso."),
+			@ApiResponse(code = 401, message = "Você não está autorizado a ver o recurso."),
+		    @ApiResponse(code = 403, message = "O acesso ao recurso que você estava tentando acessar é proibido."),
+		    @ApiResponse(code = 404, message = "O recurso que você estava tentando acessar não foi encontrado.") })
 	@PostMapping("/")
 	@ResponseStatus(HttpStatus.CREATED)
 	public void salvarCliente(@RequestBody Cliente cliente) {
@@ -41,22 +58,43 @@ public class ClienteController {
 	}
 
 	// MÉTODO PARA ATUALIZAR CLIENTE
+	@Operation(summary ="Atualiza Cliente por Id")
+	@ApiResponses(value = { 
+			@ApiResponse(code = 200, message = "Cliente atualizado com sucesso."),
+			@ApiResponse(code = 401, message = "Você não está autorizado a ver o recurso."),
+		    @ApiResponse(code = 403, message = "O acesso ao recurso que você estava tentando acessar é proibido."),
+		    @ApiResponse(code = 404, message = "O recurso que você estava tentando acessar não foi encontrado.") })
 	@PutMapping("/{id}")
-	public void atualizarCliente(@PathVariable("id") Long id, @RequestBody Cliente cliente) {
+	public void atualizarCliente(@Parameter(description = "Id de Cliente")
+								@PathVariable("id") Long id, @RequestBody Cliente cliente) {
 		this.clienteService.atualizarCliente(cliente, id);
 	}
 
 	// MÉTODO PARA EXCLUIR CLIENTE
+	@Operation(summary ="Remove Cliente por Id")
+	@ApiResponses(value = { 
+			@ApiResponse(code = 200, message = "Cliente removido com sucesso."),
+			@ApiResponse(code = 401, message = "Você não está autorizado a ver o recurso."),
+		    @ApiResponse(code = 403, message = "O acesso ao recurso que você estava tentando acessar é proibido."),
+		    @ApiResponse(code = 404, message = "O recurso que você estava tentando acessar não foi encontrado.") })
 	@DeleteMapping(value = "/{id}", produces = "application/text")
-	public String excluirCliente(@PathVariable("id") Long id) {
+	public String excluirCliente(@Parameter(description = "Id de Cliente")
+								@PathVariable("id") Long id) {
 		this.clienteService.excluirCliente(id);
 
 		return "Cliente de ID " + id + " foi excluido com sucesso!";
 	}
 
 	// MÉTODO PARA BUSCAR CLIENTES POR ID
+	@Operation(summary ="Busca Cliente por Id")
+	@ApiResponses(value = { 
+			@ApiResponse(code = 200, message = "Cliente encontrado com sucesso."),
+			@ApiResponse(code = 401, message = "Você não está autorizado a ver o recurso."),
+		    @ApiResponse(code = 403, message = "O acesso ao recurso que você estava tentando acessar é proibido."),
+		    @ApiResponse(code = 404, message = "O recurso que você estava tentando acessar não foi encontrado.") })
 	@GetMapping("/{id}")
-	public Cliente buscarAgenciaID(@PathVariable("id") Long id) {
+	public Cliente buscarAgenciaID(@Parameter(description = "Id de Cliente")
+								@PathVariable("id") Long id) {
 		return this.clienteService.buscarClienteID(id);
 	}
 }

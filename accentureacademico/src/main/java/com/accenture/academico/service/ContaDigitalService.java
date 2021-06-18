@@ -1,6 +1,8 @@
 package com.accenture.academico.service;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -37,11 +39,11 @@ public class ContaDigitalService {
 	}
 
 	// MÉTODO PARA SALVAR CONTA DIGITAL
-	public void salvarContaDigital(ContaDigital contaDigital)  {
+	public void salvarContaDigital(ContaDigital contaDigital) {
 
 		System.out.println(clienteService.buscarClienteID(contaDigital.getCliente().getIdCliente()));
-		if(clienteService.buscarClienteID(contaDigital.getCliente().getIdCliente()) == null) {
-			//tratar
+		if (clienteService.buscarClienteID(contaDigital.getCliente().getIdCliente()) == null) {
+			// tratar
 		} else {
 			this.contaDigitalRepository.save(contaDigital);
 		}
@@ -71,13 +73,13 @@ public class ContaDigitalService {
 	@SuppressWarnings("static-access")
 	public boolean sacar(double valor, Long idConta) {
 		ContaDigital conta = this.buscarContaDigitalID(idConta);
-		if(conta == null) {
+		if (conta == null) {
 			throw new OperacaoInvalidaException("Conta Invalida!");
 		}
-		
+
 		if (valor >= conta.getValorsaqueminimo() && valor < conta.getContaSaldo()) {
 			conta.setContaSaldo(conta.getContaSaldo() - valor);
-			Date today = Calendar.getInstance().getTime();
+			String today = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
 			Operacao operacao = new Operacao(today, TipoOperacao.SAQUE, valor, conta);
 			operacaoRepository.save(operacao);
 			this.alterarContaDigital(conta, idConta);
@@ -90,37 +92,36 @@ public class ContaDigitalService {
 	// debitar um valor do saldo
 	public boolean debitar(double valor, Long idConta) {
 		ContaDigital conta = this.buscarContaDigitalID(idConta);
-		if(conta == null) {
+		if (conta == null) {
 			throw new OperacaoInvalidaException("Conta Invalida!");
 		}
-		
+
 		if (valor < conta.getContaSaldo() && valor > 0) {
 			conta.setContaSaldo(conta.getContaSaldo() - valor);
 			this.alterarContaDigital(conta, idConta);
-			
+
 			return true;
-		} else if(valor ==0){
+		} else if (valor == 0) {
 			throw new OperacaoInvalidaException("Valor nulo não é permitido!");
-		}else {
+		} else {
 			throw new OperacaoInvalidaException("Valor inválido!");
 		}
-		
 
 	}
 
 	// realiza o deposito e retorna true se for bem sucedida
 	public void depositar(double valor, Long idConta) {
 		ContaDigital conta = this.buscarContaDigitalID(idConta);
-		if(conta == null) {
+		if (conta == null) {
 			throw new OperacaoInvalidaException("Conta Invalida!");
-		} else if(valor <= 0) {
+		} else if (valor <= 0) {
 			throw new OperacaoInvalidaException("Valor Inválido!");
 		}
-		
+
 		conta.setContaSaldo(conta.getContaSaldo() + valor);
 		this.alterarContaDigital(conta, idConta);
-		
-		Date today = Calendar.getInstance().getTime();
+
+		String today = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
 		Operacao operacao = new Operacao(today, TipoOperacao.DEPOSITO, valor, conta);
 		operacaoRepository.save(operacao);
 	}
@@ -129,13 +130,13 @@ public class ContaDigitalService {
 	public boolean transferir(Long idContaDestino, Long idContaOrigem, double valor) {
 
 		ContaDigital contaDestino = this.buscarContaDigitalID(idContaDestino);
-		if(contaDestino == null) {
+		if (contaDestino == null) {
 			throw new OperacaoInvalidaException("Conta Invalida!");
 		}
-		
+
 		if (this.debitar(valor, idContaOrigem)) {
 			this.depositar(valor, idContaDestino);
-			Date today = Calendar.getInstance().getTime();
+			String today = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
 			Operacao operacao = new Operacao(today, TipoOperacao.TRANSFERENCIA, valor, contaDestino);
 			operacaoRepository.save(operacao);
 			return true;
@@ -147,12 +148,12 @@ public class ContaDigitalService {
 
 	public boolean pagamento(double valor, Long idConta) {
 		ContaDigital conta = this.buscarContaDigitalID(idConta);
-		if(conta == null) {
+		if (conta == null) {
 			throw new OperacaoInvalidaException("Conta Invalida!");
 		}
-		
+
 		if (this.debitar(valor, idConta)) {
-			Date today = Calendar.getInstance().getTime();
+			String today = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
 			Operacao operacao = new Operacao(today, TipoOperacao.PAGAMENTO, valor, conta);
 			operacaoRepository.save(operacao);
 			return true;
@@ -165,10 +166,10 @@ public class ContaDigitalService {
 	// EXTRATO TOTAL
 	public List<Operacao> extrato(Long idConta) {
 		ContaDigital conta = this.buscarContaDigitalID(idConta);
-		if(conta == null) {
+		if (conta == null) {
 			throw new OperacaoInvalidaException("Conta Invalida!");
 		}
-		
+
 		return operacaoRepository.findAll();
 	}
 
@@ -177,11 +178,11 @@ public class ContaDigitalService {
 		ContaDigital conta = this.buscarContaDigitalID(idConta);
 		SimpleDateFormat formatador = new SimpleDateFormat("dd/MM/yyyy");
 		ArrayList<Operacao> operacoesExtrato = new ArrayList<Operacao>();
-		
-		if(conta == null) {
+
+		if (conta == null) {
 			throw new OperacaoInvalidaException("Conta Invalida!");
 		}
-		
+
 		for (Operacao operacao : operacaoRepository.findAll()) {
 
 			Date dataOperacao;

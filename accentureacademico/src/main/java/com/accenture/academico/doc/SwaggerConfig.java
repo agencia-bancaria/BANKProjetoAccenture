@@ -55,7 +55,7 @@ public class SwaggerConfig {
 		ApiInfoBuilder apiInfoBuilder = new ApiInfoBuilder();
  
 		apiInfoBuilder.title("Accenture - API");
-		apiInfoBuilder.description("API Accenture ");
+		apiInfoBuilder.description("API Accenture Banco Digital");
 		apiInfoBuilder.version("1.0");
 		apiInfoBuilder.termsOfServiceUrl("Termo de uso: Accenture");
 		apiInfoBuilder.license("Licença - Accenture Academy");

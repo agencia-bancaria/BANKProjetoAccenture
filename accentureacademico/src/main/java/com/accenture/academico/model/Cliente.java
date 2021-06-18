@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotEmpty;
 
 import lombok.Data;
 
@@ -17,18 +18,19 @@ public class Cliente implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "idCliente")
 	private Long idCliente;
 	
-	
+	@NotEmpty
 	@Column(name="nome")
 	private String clienteNome;
 	
-	
+	@NotEmpty
 	@Column(name="cpf")
 	private String clienteCPF;
 	
+	@NotEmpty
 	@Column(name = "telefone")
 	private String clienteFone;
 	

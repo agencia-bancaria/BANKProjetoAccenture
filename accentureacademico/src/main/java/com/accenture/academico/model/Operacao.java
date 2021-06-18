@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotEmpty;
 
 import com.sun.istack.NotNull;
 
@@ -18,16 +19,19 @@ import com.sun.istack.NotNull;
 public class Operacao {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "idOperacao")
 	private Long idOperacao;
 	
+	@NotEmpty
 	@Column(name = "dataHoraOperacao")
-	private Date dataHoraOperacao;
+	private String dataHoraOperacao;
 	
+	@NotEmpty
 	@Column(name = "tipoOperacao")
 	private TipoOperacao tipoOperacao;
 	
+	@NotEmpty
 	@Column(name = "valor")
 	private double valor;
 	
@@ -40,7 +44,7 @@ public class Operacao {
 		
 	}
 	
-	public Operacao(Date dataHoraOperacao, TipoOperacao tipoOperacao, double valor, ContaDigital conta) {
+	public Operacao(String dataHoraOperacao, TipoOperacao tipoOperacao, double valor, ContaDigital conta) {
 		this.dataHoraOperacao = dataHoraOperacao;
 		this.tipoOperacao = tipoOperacao;
 		this.valor = valor;
@@ -54,11 +58,11 @@ public class Operacao {
 		this.idOperacao = idOperacao;
 	}
 
-	public Date getDataHoraOperacao() {
+	public String getDataHoraOperacao() {
 		return dataHoraOperacao;
 	}
 
-	public void setDataHoraOperacao(Date dataHoraOperacao) {
+	public void setDataHoraOperacao(String dataHoraOperacao) {
 		this.dataHoraOperacao = dataHoraOperacao;
 	}
 

@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.NotEmpty;
 
 @Entity(name = "ContaDigital")
 public class ContaDigital implements Serializable {
@@ -21,19 +22,22 @@ public class ContaDigital implements Serializable {
 	private static final double valorSaqueMinimo = 20;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "idConta")
 	private Long idConta;
-
+	
 	@Column(name = "dataCriacao")
 	private LocalDate dataCriacao;
-
+	
+	@NotEmpty
 	@Column(name = "NumConta")
 	private int contaNumero;
-
+	
+	@NotEmpty
 	@Column(name = "saldo")
 	private double contaSaldo;
 	
+	@NotEmpty
 	@Column(name="senha")
 	private String senha;
 	

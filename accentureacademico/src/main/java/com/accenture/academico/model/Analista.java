@@ -1,3 +1,4 @@
+
 package com.accenture.academico.model;
 
 import java.io.Serializable;
@@ -9,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.NotEmpty;
 import javax.persistence.ForeignKey;
 
 @Entity(name = "Analista")
@@ -17,16 +19,19 @@ public class Analista implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "idAnalista")
 	private Long idAnalista;
 	
+	@NotEmpty
 	@Column(name = "nomeAnalista")
 	private String nomeAnalista;
 	
+	@NotEmpty
 	@Column(name = "cpfAnalista")
 	private String cpfAnalista;
 	
+	@NotEmpty
 	@Column(name="telefoneAnalista")
 	private String telefoneAnalista;
 	
