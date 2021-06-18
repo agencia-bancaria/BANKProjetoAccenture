@@ -65,6 +65,16 @@ public class Cliente implements Serializable {
 	public void setClienteFone(String clienteFone) {
 		this.clienteFone = clienteFone;
 	}
+	
+	public Cliente() {
+		
+
+	}
+	public Cliente(String nome, String cpf, String fone) {
+		this.clienteNome = nome;
+		this.clienteCPF = cpf;
+		this.clienteFone=fone;
+	}
 		
 	@Override
 	public int hashCode() {

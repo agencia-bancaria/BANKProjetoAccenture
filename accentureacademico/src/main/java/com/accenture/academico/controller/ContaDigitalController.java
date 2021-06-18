@@ -13,7 +13,11 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.validation.Valid;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 
@@ -22,12 +26,14 @@ import com.accenture.academico.model.Operacao;
 import com.accenture.academico.repository.OperacaoRepository;
 import com.accenture.academico.service.ContaDigitalService;
 
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.annotations.ResponseHeader;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
 @RestController // recebe requisições restful
@@ -38,14 +44,12 @@ public class ContaDigitalController {
 	@Autowired
 	private ContaDigitalService contaDigitalService;
 	@Autowired
-	private OperacaoRepository operacao;
 	
 	
 	// MÉTODO PARA BUSCAR TODAS AS CONTAS DIGITAL
-	@Operation(summary ="Lista todas as Contas Digitais")
-	@ApiOperation(value = "Listar todas as contas" ,response = ContaDigitalController.class, notes = "listando")
+	@Operation(summary ="Lista todas as Contas Digitais",description = "CONTAS")
 	@ApiResponses(value = { 
-			@ApiResponse(code = 200, message = "Contas Digitais listadas com sucesso.",response = ContaDigitalController.class),
+			@ApiResponse(code = 200, message = "Contas Digitais listadas com sucesso."),
 			@ApiResponse(code = 401, message = "Você não está autorizado a ver o recurso."),
 		    @ApiResponse(code = 403, message = "O acesso ao recurso que você estava tentando acessar é proibido."),
 		    @ApiResponse(code = 404, message = "O recurso que você estava tentando acessar não foi encontrado.") })
@@ -65,7 +69,7 @@ public class ContaDigitalController {
 	@ResponseStatus(HttpStatus.CREATED)
 	public void salvarcontaDigital(@RequestBody ContaDigital contaDigital) {
 		this.contaDigitalService.salvarContaDigital(contaDigital);
-	}
+	} 
 
 	// MÉTODO PARA ALTERAR CONTA DIGITAL
 	@Operation(summary ="Atualiza Conta Digital por Id")
@@ -92,7 +96,7 @@ public class ContaDigitalController {
 									@PathVariable("id") Long id) {
 		this.contaDigitalService.excluirContaDigital(id);
 
-		return "Conta corrente de ID " + id + " foi deletada com sucesso";
+		return "Conta digital de ID " + id + " foi deletada com sucesso";
 	}
 
 	// MÉTODO PARA BUSCAR CONTADIGITAL POR ID
@@ -115,9 +119,9 @@ public class ContaDigitalController {
 			@ApiResponse(code = 401, message = "Você não está autorizado a ver o recurso."),
 		    @ApiResponse(code = 403, message = "O acesso ao recurso que você estava tentando acessar é proibido."),
 		    @ApiResponse(code = 404, message = "O recurso que você estava tentando acessar não foi encontrado.") })
-	@PutMapping("/saque/{id}")
+	@PutMapping("/saque/{id}/{valor}")
 	public void saque(@Parameter(description = "Id de Conta Digital")
-					@PathVariable("id") Long id, @RequestBody double valor) {
+					@PathVariable("id") Long id, @Parameter(description = "Valor do saque") @PathVariable("valor") double valor) {
 		this.contaDigitalService.sacar(valor, id);
 	}
 
@@ -128,9 +132,9 @@ public class ContaDigitalController {
 			@ApiResponse(code = 401, message = "Você não está autorizado a ver o recurso."),
 		    @ApiResponse(code = 403, message = "O acesso ao recurso que você estava tentando acessar é proibido."),
 		    @ApiResponse(code = 404, message = "O recurso que você estava tentando acessar não foi encontrado.") })
-	@PutMapping("/deposito/{id}")
+	@PutMapping("/deposito/{id}/{valor}")
 	public void deposito(@Parameter(description = "Id de Conta Digital")
-						@PathVariable("id") Long id, @RequestBody double valor) {
+						@PathVariable("id") Long id, @Parameter(description = "Valor de depósito") @PathVariable("valor") double valor) {
 		this.contaDigitalService.depositar(valor, id);
 	}
 
@@ -141,9 +145,10 @@ public class ContaDigitalController {
 			@ApiResponse(code = 401, message = "Você não está autorizado a ver o recurso."),
 		    @ApiResponse(code = 403, message = "O acesso ao recurso que você estava tentando acessar é proibido."),
 		    @ApiResponse(code = 404, message = "O recurso que você estava tentando acessar não foi encontrado.") })
-	@PutMapping("/transferencia/{idContaOrigem}/{idContaDestino}")
+	@PutMapping("/transferencia/{idContaOrigem}/{idContaDestino}/{valor}")
 	public void transferencia(@Parameter(description = "Id de Conta Origem") @PathVariable("idContaOrigem") Long idContaOrigem,
-			@Parameter(description = "Id de Conta Destino") @PathVariable("idContaDestino") Long idContaDestino, @RequestBody double valor) {
+			@Parameter(description = "Id de Conta Destino") @PathVariable("idContaDestino") Long idContaDestino,@Valid @Parameter(description = "Valor de transfêrencia") 
+	@PathVariable("valor") double valor) {
 		this.contaDigitalService.transferir(idContaDestino, idContaOrigem, valor);
 	}
 
@@ -154,8 +159,8 @@ public class ContaDigitalController {
 			@ApiResponse(code = 401, message = "Você não está autorizado a ver o recurso."),
 		    @ApiResponse(code = 403, message = "O acesso ao recurso que você estava tentando acessar é proibido."),
 		    @ApiResponse(code = 404, message = "O recurso que você estava tentando acessar não foi encontrado.") })
-	@PutMapping("/pagamento/{id}")
-	public void pagamento(@Parameter(description = "Id de Conta") @PathVariable("id") Long id, @RequestBody double valor) {
+	@PutMapping("/pagamento/{id}/{valor}")
+	public void pagamento(@Parameter(description = "Id de Conta") @PathVariable("id") Long id, @Parameter(description = "Valor de pagamento") @PathVariable("valor") double valor) {
 		this.contaDigitalService.pagamento(valor, id);
 	}
 
@@ -168,10 +173,14 @@ public class ContaDigitalController {
 		    @ApiResponse(code = 404, message = "O recurso que você estava tentando acessar não foi encontrado.") })
 	@GetMapping("/extrato/{id}")
 	public List<Operacao> extratoPorConta(@Parameter(description = "Id de Conta")
-										@PathVariable("id") Long id) {
-		return this.contaDigitalService.extrato(id);
-	}
-	
+	@PathVariable("id") Long id) {
+		List<Operacao> operacoes = new ArrayList<Operacao>();
+		for (Operacao operacao : this.contaDigitalService.extrato(id)) {
+			if(operacao.getConta().getIdConta() == id)
+				operacoes.add(operacao);
+		} ;
+		return operacoes;
+}
 	
 
 }

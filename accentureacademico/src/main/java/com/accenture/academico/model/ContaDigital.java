@@ -29,11 +29,9 @@ public class ContaDigital implements Serializable {
 	@Column(name = "dataCriacao")
 	private LocalDate dataCriacao;
 	
-	@NotEmpty
 	@Column(name = "NumConta")
 	private int contaNumero;
 	
-	@NotEmpty
 	@Column(name = "saldo")
 	private double contaSaldo;
 	

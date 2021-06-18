@@ -54,6 +54,14 @@ public class Agencia implements Serializable{
 		this.dataAbertura = dataAbertura;
 	}
 	
+	public Agencia(long l, String nomeAgencia, String numeroAgencia, String telefoneAgencia, LocalDate dataAbertura) {
+		this.idAgencia = l;
+		this.nomeAgencia = nomeAgencia;
+		this.numeroAgencia = numeroAgencia;
+		this.telefoneAgencia = telefoneAgencia;
+		this.dataAbertura = dataAbertura;
+	}
+
 	public LocalDate  getDataAbertura() {
 		return dataAbertura;
 	}

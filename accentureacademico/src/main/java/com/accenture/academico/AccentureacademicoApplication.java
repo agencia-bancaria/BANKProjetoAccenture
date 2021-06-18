@@ -10,8 +10,10 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeIn;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
+import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.annotations.security.SecurityScheme;
 
 
@@ -24,6 +26,7 @@ import io.swagger.v3.oas.annotations.security.SecurityScheme;
 @RestController
 @EnableAutoConfiguration
 @SecurityScheme(name = "accenture", scheme = "basic", type = SecuritySchemeType.HTTP, in = SecuritySchemeIn.HEADER)
+@OpenAPIDefinition(info = @Info(title = "Bankcenture",description = "Banco  100% digital"))
 public class AccentureacademicoApplication {
 
 	public static void main(String[] args) {

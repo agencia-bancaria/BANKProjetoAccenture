@@ -23,15 +23,15 @@ public class Operacao {
 	@Column(name = "idOperacao")
 	private Long idOperacao;
 	
-	@NotEmpty
+
 	@Column(name = "dataHoraOperacao")
 	private String dataHoraOperacao;
 	
-	@NotEmpty
+	
 	@Column(name = "tipoOperacao")
 	private TipoOperacao tipoOperacao;
 	
-	@NotEmpty
+
 	@Column(name = "valor")
 	private double valor;
 	
@@ -40,7 +40,6 @@ public class Operacao {
 	@JoinColumn(name = "fk_conta_id", foreignKey = @ForeignKey(name = "fk_conta_id"), referencedColumnName = "idConta")
 	private ContaDigital conta;
 	
-	private String espaco = "      |";
 	public Operacao() {
 		
 	}
@@ -83,12 +82,9 @@ public class Operacao {
 		this.valor = valor;
 	}
 
-	public String getEspaco() {
-		return espaco;
+	public ContaDigital getConta() {
+		return conta;
 	}
 
-	public void setEspaco(String espaco) {
-		this.espaco = espaco;
-	}
 		
 }

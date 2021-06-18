@@ -41,7 +41,7 @@ public class SwaggerConfig {
 		docket
 		.globalOperationParameters(params)
 		.select()
-		.apis(RequestHandlerSelectors.basePackage("com.accenture.Bank.controller"))
+		.apis(RequestHandlerSelectors.basePackage("com.accenture.academico.controller"))
 		.paths(PathSelectors.any())
 		.build()
 		.apiInfo(this.informacoesApi().build())
