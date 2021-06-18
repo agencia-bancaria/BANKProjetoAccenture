@@ -15,14 +15,17 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Controller;
 
 import com.accenture.academico.model.ContaDigital;
 import com.accenture.academico.model.Operacao;
 import com.accenture.academico.repository.OperacaoRepository;
 import com.accenture.academico.service.ContaDigitalService;
 
+import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.ResponseHeader;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -40,8 +43,9 @@ public class ContaDigitalController {
 	
 	// MÉTODO PARA BUSCAR TODAS AS CONTAS DIGITAL
 	@Operation(summary ="Lista todas as Contas Digitais")
+	@ApiOperation(value = "Listar todas as contas" ,response = ContaDigitalController.class, notes = "listando")
 	@ApiResponses(value = { 
-			@ApiResponse(code = 200, message = "Contas Digitais listadas com sucesso."),
+			@ApiResponse(code = 200, message = "Contas Digitais listadas com sucesso.",response = ContaDigitalController.class),
 			@ApiResponse(code = 401, message = "Você não está autorizado a ver o recurso."),
 		    @ApiResponse(code = 403, message = "O acesso ao recurso que você estava tentando acessar é proibido."),
 		    @ApiResponse(code = 404, message = "O recurso que você estava tentando acessar não foi encontrado.") })
@@ -56,7 +60,7 @@ public class ContaDigitalController {
 			@ApiResponse(code = 200, message = "Conta Digital criada com sucesso."),
 			@ApiResponse(code = 401, message = "Você não está autorizado a ver o recurso."),
 		    @ApiResponse(code = 403, message = "O acesso ao recurso que você estava tentando acessar é proibido."),
-		    @ApiResponse(code = 404, message = "O recurso que você estava tentando acessar não foi encontrado.") })
+		    @ApiResponse(code = 404, message = "O recurso que você estava tentando acessar não foi encontrado.")})
 	@PostMapping("/")
 	@ResponseStatus(HttpStatus.CREATED)
 	public void salvarcontaDigital(@RequestBody ContaDigital contaDigital) {
@@ -168,20 +172,6 @@ public class ContaDigitalController {
 		return this.contaDigitalService.extrato(id);
 	}
 	
-	@Operation(summary ="---------------------------")
-	@ApiResponses(value = { 
-			@ApiResponse(code = 200, message = "Pagamento realizado com sucesso, saldo atualizado."),
-			@ApiResponse(code = 401, message = "Você não está autorizado a ver o recurso."),
-		    @ApiResponse(code = 403, message = "O acesso ao recurso que você estava tentando acessar é proibido."),
-		    @ApiResponse(code = 404, message = "O recurso que você estava tentando acessar não foi encontrado.") })
-	@GetMapping("/teste")
-	public ModelAndView listar() {
-		List<Operacao> lista = operacao.findAll();
-		
-		ModelAndView modelAndView = new ModelAndView("operacao");		
-		modelAndView.addObject("operacao", lista);
-		
-		return modelAndView;
-	}
+	
 
 }

@@ -47,8 +47,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
             .authorizeRequests()
                 .antMatchers(HttpMethod.PUT, "/contaDigital/**").hasRole("USER")
                 .antMatchers(HttpMethod.DELETE, "/contaDigital/**").hasAnyRole("ANALISTA", "USER")
+                .antMatchers(HttpMethod.GET, "/contaDigital/teste").hasAnyRole("ANALISTA", "USER")
                 .antMatchers(HttpMethod.GET, "/contaDigital/**").hasRole("ANALISTA")
                 .antMatchers(HttpMethod.POST, "/contaDigital/").hasRole("USER")
+                .antMatchers(HttpMethod.GET, "/extrato/").hasRole("USER")
               
             .and()
                 .csrf()

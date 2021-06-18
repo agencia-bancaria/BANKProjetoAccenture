@@ -40,6 +40,7 @@ public class Operacao {
 	@JoinColumn(name = "fk_conta_id", foreignKey = @ForeignKey(name = "fk_conta_id"), referencedColumnName = "idConta")
 	private ContaDigital conta;
 	
+	private String espaco = "      |";
 	public Operacao() {
 		
 	}
@@ -80,6 +81,14 @@ public class Operacao {
 
 	public void setValor(double valor) {
 		this.valor = valor;
+	}
+
+	public String getEspaco() {
+		return espaco;
+	}
+
+	public void setEspaco(String espaco) {
+		this.espaco = espaco;
 	}
 		
 }
